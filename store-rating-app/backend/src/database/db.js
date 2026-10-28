@@ -4,29 +4,35 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const DB_TYPE = (process.env.DB_TYPE || 'sqlite').toLowerCase();
+const NEON_DEFAULT_URL =
+  'postgresql://neondb_owner:npg_z60bGAkQOmEM@ep-wispy-sea-a1aaj02c-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require';
+
+const targetDbUrl = process.env.DATABASE_URL || (process.env.VERCEL ? NEON_DEFAULT_URL : undefined);
+const isPostgres =
+  (process.env.DB_TYPE || '').toLowerCase() === 'postgres' ||
+  !!process.env.DATABASE_URL ||
+  !!process.env.VERCEL;
+
 let dbInstance = null;
 
 /**
  * Initialize Database Connection
- * Supports SQLite (built into Node.js 22+) by default for zero-setup ease of use,
- * and seamlessly supports PostgreSQL when configured.
+ * Supports PostgreSQL (Neon Cloud) seamlessly on cloud/Vercel,
+ * and SQLite for zero-setup local development.
  */
 function initDB() {
   if (dbInstance) return dbInstance;
 
-  if (DB_TYPE === 'postgres' && process.env.DATABASE_URL) {
+  if (isPostgres && targetDbUrl) {
     const { Pool } = require('pg');
-    const isCloudSSL = process.env.DATABASE_URL.includes('sslmode=') || process.env.DATABASE_URL.includes('neon.tech');
     const pool = new Pool({
-      connectionString: process.env.DATABASE_URL,
-      ssl: isCloudSSL ? { rejectUnauthorized: false } : undefined,
+      connectionString: targetDbUrl,
+      ssl: { rejectUnauthorized: false },
     });
     dbInstance = {
       type: 'postgres',
       pool,
       async query(sqlText, params = []) {
-        // Convert '?' placeholders to '$1, $2, ...' for PostgreSQL
         let paramIndex = 1;
         const pgSql = sqlText.replace(/\?/g, () => `$${paramIndex++}`);
         const result = await pool.query(pgSql, params);

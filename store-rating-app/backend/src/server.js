@@ -10,9 +10,42 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
+// Base Middleware
 app.use(cors());
 app.use(express.json());
+
+let dbInitialized = false;
+let dbInitPromise = null;
+
+async function ensureDbInit() {
+  if (dbInitialized) return;
+  if (!dbInitPromise) {
+    dbInitPromise = (async () => {
+      initDB();
+      await initSchema();
+      await seedDefaultData();
+      dbInitialized = true;
+    })().catch((err) => {
+      dbInitPromise = null;
+      throw err;
+    });
+  }
+  return dbInitPromise;
+}
+
+// Middleware to ensure DB is initialized BEFORE any route is executed
+app.use(async (req, res, next) => {
+  try {
+    await ensureDbInit();
+    next();
+  } catch (err) {
+    console.error('Database initialization error:', err);
+    res.status(500).json({
+      message: 'Database initialization failed.',
+      error: err.message || String(err),
+    });
+  }
+});
 
 // API Health Check
 app.get('/api/health', (req, res) => {
@@ -41,33 +74,6 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
     message: err.message || 'Internal Server Error',
   });
-});
-
-let dbInitialized = false;
-let dbInitPromise = null;
-
-async function ensureDbInit() {
-  if (dbInitialized) return;
-  if (!dbInitPromise) {
-    dbInitPromise = (async () => {
-      initDB();
-      await initSchema();
-      await seedDefaultData();
-      dbInitialized = true;
-    })();
-  }
-  return dbInitPromise;
-}
-
-// Middleware to ensure DB is initialized before handling requests
-app.use(async (req, res, next) => {
-  try {
-    await ensureDbInit();
-    next();
-  } catch (err) {
-    console.error('Database initialization error:', err);
-    next(err);
-  }
 });
 
 // Start local HTTP server when executed directly (node src/server.js)

@@ -26,7 +26,10 @@ export async function apiRequest(endpoint, { method = 'GET', body, headers = {} 
   const data = await response.json().catch(() => ({}));
 
   if (!response.ok) {
-    const error = new Error(data.message || `Request failed with status ${response.status}`);
+    const errorMsg = data.error
+      ? `${data.message || 'Error'} (${data.error})`
+      : data.message || `Request failed with status ${response.status}`;
+    const error = new Error(errorMsg);
     error.status = response.status;
     error.errors = data.errors || [];
     throw error;

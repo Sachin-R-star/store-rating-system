@@ -5,7 +5,10 @@ const bcrypt = require('bcryptjs');
  * Creates required tables if they don't already exist.
  */
 async function initSchema() {
-  const isPostgres = (process.env.DB_TYPE || '').toLowerCase() === 'postgres';
+  const isPostgres =
+    (process.env.DB_TYPE || '').toLowerCase() === 'postgres' ||
+    !!process.env.DATABASE_URL ||
+    !!process.env.VERCEL;
 
   const schemaSQL = isPostgres
     ? `
