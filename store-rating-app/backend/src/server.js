@@ -43,24 +43,49 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Initialize Database & Start Server
-async function startServer() {
-  try {
-    initDB();
-    await initSchema();
-    await seedDefaultData();
+let dbInitialized = false;
+let dbInitPromise = null;
 
-    app.listen(PORT, () => {
-      console.log(`===============================================`);
-      console.log(` Store Rating System Backend Server Running   `);
-      console.log(` Port: ${PORT}                                `);
-      console.log(` Health: http://localhost:${PORT}/api/health   `);
-      console.log(`===============================================`);
-    });
-  } catch (error) {
-    console.error('Failed to start server:', error);
-    process.exit(1);
+async function ensureDbInit() {
+  if (dbInitialized) return;
+  if (!dbInitPromise) {
+    dbInitPromise = (async () => {
+      initDB();
+      await initSchema();
+      await seedDefaultData();
+      dbInitialized = true;
+    })();
   }
+  return dbInitPromise;
 }
 
-startServer();
+// Middleware to ensure DB is initialized before handling requests
+app.use(async (req, res, next) => {
+  try {
+    await ensureDbInit();
+    next();
+  } catch (err) {
+    console.error('Database initialization error:', err);
+    next(err);
+  }
+});
+
+// Start local HTTP server when executed directly (node src/server.js)
+if (require.main === module) {
+  ensureDbInit()
+    .then(() => {
+      app.listen(PORT, () => {
+        console.log(`===============================================`);
+        console.log(` Store Rating System Backend Server Running   `);
+        console.log(` Port: ${PORT}                                `);
+        console.log(` Health: http://localhost:${PORT}/api/health   `);
+        console.log(`===============================================`);
+      });
+    })
+    .catch((error) => {
+      console.error('Failed to start server:', error);
+      process.exit(1);
+    });
+}
+
+module.exports = app;
