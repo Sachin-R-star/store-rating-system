@@ -149,7 +149,7 @@ export function Login({ onSwitchToRegister }) {
               One-Click Demo Access
             </span>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(95px, 1fr))', gap: '0.5rem' }}>
               <button
                 type="button"
                 className="btn btn-secondary btn-sm"

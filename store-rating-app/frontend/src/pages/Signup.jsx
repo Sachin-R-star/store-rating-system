@@ -261,17 +261,17 @@ export function Signup({ onSwitchToLogin }) {
               <div style={{ fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.35rem' }}>
                 Password Security Requirements:
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.3rem' }}>
-                <span style={{ color: isPassLengthValid ? 'var(--success)' : 'var(--text-dim)', display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 500 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(135px, 1fr))', gap: '0.35rem 0.75rem' }}>
+                <span style={{ color: isPassLengthValid ? 'var(--success)' : 'var(--text-dim)', display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 500, minWidth: 0 }}>
                   {isPassLengthValid ? <Check size={13} /> : '•'} 8–16 characters
                 </span>
-                <span style={{ color: isPassUpperValid ? 'var(--success)' : 'var(--text-dim)', display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 500 }}>
+                <span style={{ color: isPassUpperValid ? 'var(--success)' : 'var(--text-dim)', display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 500, minWidth: 0 }}>
                   {isPassUpperValid ? <Check size={13} /> : '•'} 1 uppercase letter
                 </span>
-                <span style={{ color: isPassSpecialValid ? 'var(--success)' : 'var(--text-dim)', display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 500 }}>
+                <span style={{ color: isPassSpecialValid ? 'var(--success)' : 'var(--text-dim)', display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 500, minWidth: 0 }}>
                   {isPassSpecialValid ? <Check size={13} /> : '•'} 1 special char
                 </span>
-                <span style={{ color: isConfirmValid ? 'var(--success)' : 'var(--text-dim)', display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 500 }}>
+                <span style={{ color: isConfirmValid ? 'var(--success)' : 'var(--text-dim)', display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 500, minWidth: 0 }}>
                   {isConfirmValid ? <Check size={13} /> : '•'} Passwords match
                 </span>
               </div>
