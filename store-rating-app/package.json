@@ -1,0 +1,10 @@
+{
+  "name": "store-rating-system",
+  "version": "1.0.0",
+  "description": "Store Rating System - Full-stack application",
+  "private": true,
+  "scripts": {
+    "backend": "npm --prefix backend run dev",
+    "frontend": "npm --prefix frontend run dev"
+  }
+}
