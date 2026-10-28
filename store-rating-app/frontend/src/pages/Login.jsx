@@ -115,10 +115,10 @@ export function Login({ onSwitchToRegister }) {
           </p>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'var(--primary-light)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.72rem', fontWeight: 700 }}>
-              A
+              S
             </div>
             <span style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-muted)' }}>
-              Ananya Venkatesh · Verified Shopper, Bengaluru
+              Verified Shopper · Community Member
             </span>
           </div>
         </div>
@@ -148,6 +148,7 @@ export function Login({ onSwitchToRegister }) {
             <span style={{ fontSize: '0.74rem', color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.07em', fontWeight: 700, display: 'block', marginBottom: '0.65rem' }}>
               One-Click Demo Access
             </span>
+
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
               <button
                 type="button"
@@ -157,7 +158,7 @@ export function Login({ onSwitchToRegister }) {
                 style={{ fontSize: '0.78rem', padding: '0.55rem 0.2rem', borderColor: 'var(--accent-plum-border)', background: 'var(--accent-plum-bg)' }}
               >
                 <Shield size={13} color="var(--accent-plum)" />
-                <span style={{ color: 'var(--accent-plum)', fontWeight: 700 }}>Admin (Rajesh)</span>
+                <span style={{ color: 'var(--accent-plum)', fontWeight: 700 }}>Admin</span>
               </button>
 
               <button
@@ -168,7 +169,7 @@ export function Login({ onSwitchToRegister }) {
                 style={{ fontSize: '0.78rem', padding: '0.55rem 0.2rem', borderColor: 'var(--accent-cinnamon-border)', background: 'var(--accent-cinnamon-bg)' }}
               >
                 <ShoppingBag size={13} color="var(--accent-cinnamon)" />
-                <span style={{ color: 'var(--accent-cinnamon)', fontWeight: 700 }}>Owner (Vikram)</span>
+                <span style={{ color: 'var(--accent-cinnamon)', fontWeight: 700 }}>Store Owner</span>
               </button>
 
               <button
@@ -179,7 +180,7 @@ export function Login({ onSwitchToRegister }) {
                 style={{ fontSize: '0.78rem', padding: '0.55rem 0.2rem', borderColor: 'var(--accent-olive-border)', background: 'var(--accent-olive-bg)' }}
               >
                 <User size={13} color="var(--accent-olive)" />
-                <span style={{ color: 'var(--accent-olive)', fontWeight: 700 }}>Shopper (Ananya)</span>
+                <span style={{ color: 'var(--accent-olive)', fontWeight: 700 }}>Shopper</span>
               </button>
             </div>
           </div>

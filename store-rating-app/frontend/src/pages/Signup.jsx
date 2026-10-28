@@ -184,7 +184,7 @@ export function Signup({ onSwitchToLogin }) {
                 type="text"
                 name="name"
                 className="form-input"
-                placeholder="e.g. Rajeshwar Prasad Sharma"
+                placeholder="e.g. Ramesh Chandra Srivastava"
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -201,7 +201,7 @@ export function Signup({ onSwitchToLogin }) {
                 type="email"
                 name="email"
                 className="form-input"
-                placeholder="rajesh.sharma@example.in"
+                placeholder="user@example.com"
                 value={formData.email}
                 onChange={handleChange}
                 required
